@@ -1,0 +1,42 @@
+
+
+# Administrator credentials when not using an existing secret (see below)
+adminUser: admin
+adminPassword: admin
+
+
+## Configure grafana datasources
+## ref: http://docs.grafana.org/administration/provisioning/#datasources
+##
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: PROMETHEUS_ADDRESS
+        access: proxy
+        isDefault: true
+
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+   default:
+     cluster-costs:
+       url: dashboards/cluster-costs.json
+     costs-dimension:
+       url: dashboards/costs-dimension.json
+     namespace-costs:
+       url: dashboards/namespace-costs.json
