@@ -1,8 +1,7 @@
 
 service:
   enabled: true
-  type: NodePort
-  nodePort: 31111
+  type: ClusterIP
   port: 80
   targetPort: 3000
   # targetPort: 4181 To be used with a proxy extraContainer
