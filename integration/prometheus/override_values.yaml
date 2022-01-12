@@ -40,8 +40,7 @@ extraScrapeConfigs: |-
 
 server:
   service:
-    nodePort: 31112
-    type: NodePort
+    type: ClusterIP
 
 nodeExporter:
   hostRootfs: false
