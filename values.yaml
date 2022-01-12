@@ -658,7 +658,7 @@ grafana:
       datasources:
         - name: Prometheus
           type: prometheus
-          url: http://fadvisor-prometheus-server.crane-system.svc.cluster.local
+          url: http://crane-prometheus-server.crane-system.svc.cluster.local
           #      url: http://kvass-thanos.kube-system:9090
           access: proxy
           isDefault: true

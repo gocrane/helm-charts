@@ -14,7 +14,7 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: PROMETHEUS_ADDRESS
+        url: http://crane-prometheus-server.crane-system.svc.cluster.local
         access: proxy
         isDefault: true
 
@@ -35,8 +35,8 @@ dashboardProviders:
 dashboards:
    default:
      cluster-costs:
-       url: dashboards/cluster-costs.json
+       url: https://raw.githubusercontent.com/gocrane/helm-charts/main/integration/grafana/dashboards/cluster-costs.json
      costs-dimension:
-       url: dashboards/costs-dimension.json
+       url: https://raw.githubusercontent.com/gocrane/helm-charts/main/integration/grafana/dashboards/costs-dimension.json
      namespace-costs:
-       url: dashboards/namespace-costs.json
+       url: https://raw.githubusercontent.com/gocrane/helm-charts/main/integration/grafana/dashboards/namespace-costs.json
