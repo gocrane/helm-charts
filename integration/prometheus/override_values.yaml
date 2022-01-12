@@ -41,6 +41,7 @@ extraScrapeConfigs: |-
 server:
   service:
     type: ClusterIP
+    port: 8081
 
 nodeExporter:
   hostRootfs: false
