@@ -40,8 +40,20 @@ extraScrapeConfigs: |-
 
 server:
   service:
+    annotations: { }
+    labels: { }
+    clusterIP: ""
+
+    ## List of IP addresses at which the Prometheus server service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: [ ]
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: [ ]
+    servicePort: 8081
+    sessionAffinity: None
     type: ClusterIP
-    port: 8081
 
 nodeExporter:
   hostRootfs: false
