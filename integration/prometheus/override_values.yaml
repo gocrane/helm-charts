@@ -42,3 +42,6 @@ server:
   service:
     nodePort: 31112
     type: NodePort
+
+nodeExporter:
+  hostRootfs: false

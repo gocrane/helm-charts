@@ -1,4 +1,14 @@
 
+service:
+  enabled: true
+  type: NodePort
+  nodePort: 31112
+  port: 80
+  targetPort: 3000
+  # targetPort: 4181 To be used with a proxy extraContainer
+  annotations: {}
+  labels: {}
+  portName: service
 
 # Administrator credentials when not using an existing secret (see below)
 adminUser: admin
@@ -14,7 +24,7 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: http://crane-prometheus-server.crane-system.svc.cluster.local
+        url: http://prometheus-server.crane-system.svc.cluster.local
         access: proxy
         isDefault: true
 
