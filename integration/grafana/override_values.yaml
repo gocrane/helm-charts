@@ -23,7 +23,7 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: http://prometheus-server.crane-system.svc.cluster.local
+        url: http://prometheus-server.crane-system.svc.cluster.local:8080
         access: proxy
         isDefault: true
 
