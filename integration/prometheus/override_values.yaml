@@ -35,7 +35,7 @@ extraScrapeConfigs: |-
     scheme: http
     metrics_path: /metrics
     static_configs:
-      - targets: ['cost-exporter.crane-system.svc.cluster.local:8081']
+      - targets: ['cost-exporter.crane-system.svc.cluster.local:80']
 
 
 server:
