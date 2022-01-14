@@ -1,22 +1,22 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "cost-exporter.fullname" . }}
+  name: {{ include "craned.fullname" . }}
 rules:
   - apiGroups: [ '*' ]
     resources: [ '*' ]
     verbs: [ "*" ]
-
 ---
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "cost-exporter.fullname" . }}
+  name: {{ include "craned.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "craned.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "cost-exporter.serviceAccountName" . }}
+    name: {{ include "craned.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-roleRef:
-  kind: ClusterRole
-  name: {{ include "cost-exporter.fullname" . }}
-  apiGroup: rbac.authorization.k8s.io
