@@ -2,6 +2,8 @@ apiVersion: apiregistration.k8s.io/v1
 kind: APIService
 metadata:
   name: v1beta1.custom.metrics.k8s.io
+  labels:
+    {{- include "metric-adapter.labels" . | nindent 4 }}
 spec:
   service:
     name: {{ include "metric-adapter.fullname" . }}
@@ -16,6 +18,8 @@ apiVersion: apiregistration.k8s.io/v1
 kind: APIService
 metadata:
   name: v1beta2.custom.metrics.k8s.io
+  labels:
+    {{- include "metric-adapter.labels" . | nindent 4 }}
 spec:
   service:
     name: {{ include "metric-adapter.fullname" . }}

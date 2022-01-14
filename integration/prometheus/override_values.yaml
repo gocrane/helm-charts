@@ -57,3 +57,17 @@ server:
 
 nodeExporter:
   hostRootfs: false
+
+kubeStateMetrics:
+  ## If false, kube-state-metrics sub-chart will not be installed
+  ##
+  enabled: true
+
+## kube-state-metrics sub-chart configurable values
+## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
+##
+kube-state-metrics:
+  image:
+    repository: ccr.ccs.tencentyun.com/tkeimages/kube-state-metrics
+    pullPolicy: IfNotPresent
+    tag: "2.2.4"
