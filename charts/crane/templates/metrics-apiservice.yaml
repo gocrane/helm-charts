@@ -3,10 +3,10 @@ kind: APIService
 metadata:
   name: v1beta1.custom.metrics.k8s.io
   labels:
-    {{- include "metric-adapter.labels" . | nindent 4 }}
+    {{- include "crane.labels" . | nindent 4 }}
 spec:
   service:
-    name: {{ include "metric-adapter.fullname" . }}
+    name: metric-adapter
     namespace: {{ .Release.Namespace }}
   group: custom.metrics.k8s.io
   version: v1beta1
@@ -19,10 +19,10 @@ kind: APIService
 metadata:
   name: v1beta2.custom.metrics.k8s.io
   labels:
-    {{- include "metric-adapter.labels" . | nindent 4 }}
+    {{- include "crane.labels" . | nindent 4 }}
 spec:
   service:
-    name: {{ include "metric-adapter.fullname" . }}
+    name: metric-adapter
     namespace: {{ .Release.Namespace }}
   group: custom.metrics.k8s.io
   version: v1beta2

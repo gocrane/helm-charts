@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metric-adapter
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
+    app: metric-adapter
+spec:
+  replicas: {{ .Values.metricAdapter.replicaCount }}
+  selector:
+    matchLabels:
+      app: metric-adapter
+  template:
+    metadata:
+      {{- with .Values.metricAdapter.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: metric-adapter
+    spec:
+      {{- with .Values.metricAdapter.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: metric-adapter
+      containers:
+        - name: metric-adapter
+          image: "{{ .Values.metricAdapter.image.repository }}:{{ .Values.metricAdapter.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.metricAdapter.image.pullPolicy }}
+          command:
+            - /metric-adapter
+          args:
+          {{- range $key, $value := .Values.metricAdapter.containerArgs }}
+            {{- if $value }}
+            - --{{ $key }}={{ $value }}
+            {{- else }}
+            - --{{ $key }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - containerPort: 6443
+              name: https
+          readinessProbe:
+            httpGet:
+              path: readyz
+              port: http
+          volumeMounts:
+            - mountPath: /tmp
+              name: temp-vol
+          resources:
+            {{- toYaml .Values.metricAdapter.resources | nindent 12 }}
+      {{- with .Values.metricAdapter.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.metricAdapter.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.metricAdapter.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: temp-vol
+          emptyDir: {}

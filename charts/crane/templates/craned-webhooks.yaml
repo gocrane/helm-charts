@@ -1,20 +1,9 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: webhook-service
-spec:
-  ports:
-    - port: 443
-      protocol: TCP
-      targetPort: 9443
-  selector:
-    {{- include "craned.selectorLabels" . | nindent 4 }}
-
----
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
   name: crane-mutating-webhook
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions:
       - v1
@@ -22,7 +11,7 @@ webhooks:
       caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNuRENDQVlRQ0NRQ2ZZR2NmUjU5THRUQU5CZ2txaGtpRzl3MEJBUXNGQURBUU1RNHdEQVlEVlFRRERBVmoKY21GdVpUQWVGdzB5TWpBeE1USXdPVFUzTkRKYUZ3MHlNakF5TVRFd09UVTNOREphTUJBeERqQU1CZ05WQkFNTQpCV055WVc1bE1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBdEsyM3MreDR4Mm83CmtITk5RNkdvRU1LZlJPemlWU1g4VnVlT2hBekk1TDFUK3FnNUwwZ1MzZFJiQW44dEx4MnVPdE5FN25xTzhIbHQKVFdCTDBxRFJlR2xMWlBOREF5UWR0UDNXeEpFSmZvUVhSVTNmTC83U3kvK1pybGFYZHg0bzFabkJ4bDZVSlRyUQo2ZFVReHhzYitGTytjRElpRU5Idk4xTTBwRjgvV0V2Mzk2U0J2REFYU3J0UTdtRUpMRFlueXE1NGNPeURHY3lnCjJDUDQwQVp5QjF4VGs4bXJuQmw0cDBYdklmMS84Tmg0bW1Ba3JCdXJiQk5MRDJkdzJWSTAwdkVtVGhJWkdJdXoKWlk5Tzl3a0J4TlJKQ0JmMWdBTzdCZTJpbUFhd3FrcWVoeDVMMWxmZVl1RUdBMVozQ2djY2dWakJaWHhzbjArTgpCblNoWnc0b2F3SURBUUFCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBUWlPdWRKVVpyM0tRV0RzZndKYVhECmx1SEpGQmdnWkhHY3lqT3lGNGx3UW9jTnI2RmdDanNJdzdLRVAyWU1qVUNXUDBMQTUxUXJJZVlPZTZwd2hVZkYKdElvOGhrTkdLM09ZSmx2aklaNEc4R3JzVy85bVFtUVRibzR6Tk0xVjA0UkNOU1Uzei80TXdXUkJFd05RVGdkago3KzR5cXlreVdCVGVRYUh0bGIxamY5NW1kVTZIU3RtbWtZVmpJQ21PdjJkdTRxL2lDamRtVHBXNG5xaHVmUUlnCkhVVDJyN0dXbnRPSEdsVkd2MnkwUEhRN3FqcmdzNGhUVnkyd3RNZHArUkx4aHhyZmdtNmgzSkVFdkVLYjI2RU0KQmJaN3FCNTBqZTI4OVp3dFFCQSs0SHYyaEZsZnNPTGNidWllalpKYWN2YXgxUGptMFZBcm1ZeVdpOGEyQ3lVYgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
       service:
         name: webhook-service
-        namespace: crane-system
+        namespace: {{ .Release.Namespace }}
         path: /mutate-prediction-crane-io-v1alpha1-timeseriesprediction
     failurePolicy: Fail
     name: mprediction.crane.io
@@ -43,6 +32,8 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: crane-validating-webhook
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions:
       - v1
@@ -50,7 +41,7 @@ webhooks:
       caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNuRENDQVlRQ0NRQ2ZZR2NmUjU5THRUQU5CZ2txaGtpRzl3MEJBUXNGQURBUU1RNHdEQVlEVlFRRERBVmoKY21GdVpUQWVGdzB5TWpBeE1USXdPVFUzTkRKYUZ3MHlNakF5TVRFd09UVTNOREphTUJBeERqQU1CZ05WQkFNTQpCV055WVc1bE1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBdEsyM3MreDR4Mm83CmtITk5RNkdvRU1LZlJPemlWU1g4VnVlT2hBekk1TDFUK3FnNUwwZ1MzZFJiQW44dEx4MnVPdE5FN25xTzhIbHQKVFdCTDBxRFJlR2xMWlBOREF5UWR0UDNXeEpFSmZvUVhSVTNmTC83U3kvK1pybGFYZHg0bzFabkJ4bDZVSlRyUQo2ZFVReHhzYitGTytjRElpRU5Idk4xTTBwRjgvV0V2Mzk2U0J2REFYU3J0UTdtRUpMRFlueXE1NGNPeURHY3lnCjJDUDQwQVp5QjF4VGs4bXJuQmw0cDBYdklmMS84Tmg0bW1Ba3JCdXJiQk5MRDJkdzJWSTAwdkVtVGhJWkdJdXoKWlk5Tzl3a0J4TlJKQ0JmMWdBTzdCZTJpbUFhd3FrcWVoeDVMMWxmZVl1RUdBMVozQ2djY2dWakJaWHhzbjArTgpCblNoWnc0b2F3SURBUUFCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBUWlPdWRKVVpyM0tRV0RzZndKYVhECmx1SEpGQmdnWkhHY3lqT3lGNGx3UW9jTnI2RmdDanNJdzdLRVAyWU1qVUNXUDBMQTUxUXJJZVlPZTZwd2hVZkYKdElvOGhrTkdLM09ZSmx2aklaNEc4R3JzVy85bVFtUVRibzR6Tk0xVjA0UkNOU1Uzei80TXdXUkJFd05RVGdkago3KzR5cXlreVdCVGVRYUh0bGIxamY5NW1kVTZIU3RtbWtZVmpJQ21PdjJkdTRxL2lDamRtVHBXNG5xaHVmUUlnCkhVVDJyN0dXbnRPSEdsVkd2MnkwUEhRN3FqcmdzNGhUVnkyd3RNZHArUkx4aHhyZmdtNmgzSkVFdkVLYjI2RU0KQmJaN3FCNTBqZTI4OVp3dFFCQSs0SHYyaEZsZnNPTGNidWllalpKYWN2YXgxUGptMFZBcm1ZeVdpOGEyQ3lVYgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
       service:
         name: webhook-service
-        namespace: crane-system
+        namespace: {{ .Release.Namespace }}
         path: /validate-prediction-crane-io-v1alpha1-timeseriesprediction
     failurePolicy: Fail
     name: vprediction.crane.io
