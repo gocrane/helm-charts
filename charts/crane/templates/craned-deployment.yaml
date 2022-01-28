@@ -1,57 +1,73 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "craned.fullname" . }}
+  name: craned
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "craned.labels" . | nindent 4 }}
+    {{- include "crane.labels" . | nindent 4 }}
+    app: craned
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.craned.replicaCount }}
   selector:
     matchLabels:
-      {{- include "craned.selectorLabels" . | nindent 6 }}
+      app: craned
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.craned.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "craned.selectorLabels" . | nindent 8 }}
+        app: craned
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.craned.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "craned.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: craned
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: craned
+          image: "{{ .Values.craned.image.repository }}:{{ .Values.craned.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.craned.image.pullPolicy }}
           command:
             - /craned
           args:
             - --recommendation-config-file=/tmp/recommendation-config/config_set.yaml
-          {{- range $key, $value := .Values.extraArgs }}
+          {{- range $key, $value := .Values.craned.containerArgs }}
             {{- if $value }}
             - --{{ $key }}={{ $value }}
             {{- else }}
             - --{{ $key }}
             {{- end }}
           {{- end }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /tmp/k8s-webhook-server/serving-certs
               name: cert
               readOnly: true
             - name: config
               mountPath: /tmp/recommendation-config
+          ports:
+            - name: http
+              containerPort: 9443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: readyz
+              port: http
+          resources:
+            {{- toYaml .Values.craned.resources | nindent 12 }}
+      {{- with .Values.craned.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.craned.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.craned.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: cert
           secret:
@@ -60,18 +76,6 @@ spec:
         - name: config
           configMap:
             name: recommendation-config
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
 
 ---
 apiVersion: v1
@@ -81,7 +85,9 @@ data:
 kind: Secret
 metadata:
   name: webhook-server-tls
-  namespace: crane-system
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
 type: kubernetes.io/tls
 
 ---
@@ -90,7 +96,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: recommendation-config
-  namespace: crane-system
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
 data:
   config_set.yaml: |-
     apiVersion: analysis.crane.io/v1alpha1

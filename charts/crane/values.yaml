@@ -1,0 +1,53 @@
+craned:
+  image:
+    repository: docker.io/gocrane/craned
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  replicaCount: 1
+
+  containerArgs:
+    prometheus-address: http://prometheus-server.crane-system.svc.cluster.local:8080
+    feature-gates: Analysis=true,TimeSeriesPrediction=true,Autoscaling=true
+    log-level: 2
+
+  podAnnotations: { }
+
+  resources: { }
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
+
+metricAdapter:
+  image:
+    repository: docker.io/gocrane/metric-adapter
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  replicaCount: 1
+
+  containerArgs:
+    secure-port: 6443
+    alsologtostderr: true
+    remote-adapter: false
+    remote-adapter-service-namespace:
+    remote-adapter-service-name:
+    remote-adapter-service-port:
+    log-level: 2
+    api-qps: 300
+    api-burst: 400
+
+  podAnnotations: { }
+
+  resources: { }
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
