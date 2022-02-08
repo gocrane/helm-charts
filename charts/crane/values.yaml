@@ -10,7 +10,7 @@ craned:
   containerArgs:
     prometheus-address: http://prometheus-server.crane-system.svc.cluster.local:8080
     feature-gates: Analysis=true,TimeSeriesPrediction=true,Autoscaling=true
-    log-level: 2
+    v: 2
 
   podAnnotations: { }
 
@@ -34,13 +34,16 @@ metricAdapter:
   containerArgs:
     secure-port: 6443
     alsologtostderr: true
-    remote-adapter: false
+    v: 2
+    api-qps: 300
+    api-burst: 400
+
+  remoteAdapterEnabled: false
+
+  remoteAdapterArgs:
     remote-adapter-service-namespace:
     remote-adapter-service-name:
     remote-adapter-service-port:
-    log-level: 2
-    api-qps: 300
-    api-burst: 400
 
   podAnnotations: { }
 
