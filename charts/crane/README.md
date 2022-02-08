@@ -1,11 +1,4 @@
-# Crane: Cloud Resource Analytics and Economics
-
-<img alt="Crane logo" height="100" src="https://raw.githubusercontent.com/gocrane/crane/main/docs/images/crane.png" title="Crane" width="200"/>
-
----
-
-Crane (FinOps Crane) is a cloud native open source project which manages cloud resources on Kubernetes stack, it is inspired by FinOps concepts.
-
+# Crane
 ## TL;DR
 
 ```console
@@ -31,7 +24,7 @@ helm repo add crane https://gocrane.github.io/helm-charts
 helm repo update
 ```
 
-_See [helm repo](https://helm.sh/docs/helm/helm_repo/) for command documentation._
+See [helm repo](https://helm.sh/docs/helm/helm_repo/) for command documentation.
 
 ## Install Chart
 
@@ -39,9 +32,9 @@ _See [helm repo](https://helm.sh/docs/helm/helm_repo/) for command documentation
 helm install crane -n crane-system --create-namespace crane/crane
 ```
 
-_See [configuration](#configuration) below._
+See [configuration](#configuration) below.
 
-_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation.
 
 ## Uninstall Chart
 
@@ -51,7 +44,7 @@ helm uninstall crane -n crane-system
 
 This removes all the Kubernetes components associated with the chart and deletes the release.
 
-_See [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) for command documentation._
+See [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) for command documentation.
 
 ## Configuration
 
@@ -74,7 +67,7 @@ The following table lists the configurable parameters of the Crane chart and the
 | `metricAdapter.image.tag`                                  | Image tag of MetricAdapter. Optional, given app version of Helm chart is used by default | `` |
 | `metricAdapter.image.pullPolicy`                           | Image pullPolicy of MetricAdapter | `IfNotPresent` |
 | `metricAdapter.replicaCount`                               | Replica count of MetricAdapter | `1` |
-| `metricAdapter.containerArgs`                              | Container's command line arguments to pass to MetricAdapter | `{ "secure-port": "6443", "alsologtostderr": "true", "remote-adapter": "false", "remote-adapter-service-namespace": "", "remote-adapter-service-name": "", "remote-adapter-service-port": "", "v": "", "api-qps": "300", "api-burst": "400"}` |
+| `metricAdapter.containerArgs`                              | Container's command line arguments to pass to MetricAdapter | `{ "secure-port": "6443", "alsologtostderr": "true", "v": "", "api-qps": "300", "api-burst": "400"}` |
 | `metricAdapter.remoteAdapterEnabled`                       | Enable remote adapter feature to MetricAdapter | `false` |
 | `metricAdapter.remoteAdapterArgs`                          | Remote adapter command line arguments to pass to MetricAdapter | `{ "remote-adapter-service-namespace": "", "remote-adapter-service-name": "", "remote-adapter-service-port": ""}` |
 | `metricAdapter.podAnnotations`                             | Pod annotations  of MetricAdapter | `{}` |
