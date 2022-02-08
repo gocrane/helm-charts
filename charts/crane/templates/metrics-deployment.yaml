@@ -32,6 +32,16 @@ spec:
           command:
             - /metric-adapter
           args:
+          {{- if .Values.metricAdapter.remoteAdapterEnabled }}
+            - --remote-adapter=true
+            {{- range $key, $value := .Values.metricAdapter.remoteAdapterArgs }}
+            {{- if $value }}
+            - --{{ $key }}={{ $value }}
+            {{- else }}
+            - --{{ $key }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
           {{- range $key, $value := .Values.metricAdapter.containerArgs }}
             {{- if $value }}
             - --{{ $key }}={{ $value }}
