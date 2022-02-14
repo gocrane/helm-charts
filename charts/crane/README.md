@@ -56,7 +56,7 @@ The following table lists the configurable parameters of the Crane chart and the
 | `craned.image.tag`                                         | Image tag of Craned. Optional, given app version of Helm chart is used by default | `` |
 | `craned.image.pullPolicy`                                  | Image pullPolicy of Craned | `IfNotPresent` |
 | `craned.replicaCount`                                      | Replica count of Craned | `1` |
-| `craned.containerArgs`                                     | Container's command line arguments to pass to Craned | `{ "prometheus-address": "http://prometheus-server.crane-system.svc.cluster.local:8080", "feature-gates": "Analysis=true,TimeSeriesPrediction=true,Autoscaling=true", "v": "2"}` |
+| `craned.containerArgs`                                     | Container's command line arguments to pass to Craned, See [craned.containerArgs](#cranedcontainerargs) below.  | `{ "prometheus-address": "http://prometheus-server.crane-system.svc.cluster.local:8080", "feature-gates": "Analysis=true,TimeSeriesPrediction=true,Autoscaling=true", "v": "2"}` |
 | `craned.podAnnotations`                                    | Pod annotations  of Craned | `{}` |
 | `craned.resources`                                         | Pod resources of Craned | `{}` |
 | `craned.nodeSelector`                                      | Node selectors of Craned deployment| `{}` |
@@ -76,3 +76,11 @@ The following table lists the configurable parameters of the Crane chart and the
 | `metricAdapter.tolerations`                                | Tolerations of MetricAdapter deployment | `{}` |
 | `metricAdapter.affinity`                                   | Affinity of MetricAdapter deployment | `{}` |
 | `metricAdapter.nodeSelector`                               | Node selectors of MetricAdapter | `{}` |
+
+### craned.containerArgs
+| Parameter                                                  | Description                               | Default                                         |
+|:-----------------------------------------------------------|:------------------------------------------|:------------------------------------------------|
+| `ehpa-propagation-label-prefixes`                          | Labels whose key has the prefix need to be propagated to hpa |                              |
+| `ehpa-propagation-annotation-prefixes`                     | Annotations whose key has the prefix need to be propagated to hpa |                         |
+| `ehpa-propagation-labels`                                  | Labels whose key is complete matching need to be propagated to hpa |                        |
+| `ehpa-propagation-annotations`                             | Annotations whose key is complete matching need to be propagated to hpa |                   |
