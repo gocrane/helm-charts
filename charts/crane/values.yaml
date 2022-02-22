@@ -54,3 +54,26 @@ metricAdapter:
   tolerations: [ ]
 
   affinity: { }
+
+craneAgent:
+  enable: false
+
+  image:
+    repository: docker.io/gocrane/crane-agent
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: { }
+
+  resources: { }
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
+
+  containerArgs:
+    runtime-endpoint: unix:///rootvar/run/dockershim.sock
+    v: 2
