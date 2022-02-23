@@ -1,0 +1,79 @@
+{{ if .Values.craneAgent.enable }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
+    app: crane-agent
+  name: crane-agent
+  namespace:  {{ .Release.Namespace }}
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: crane-agent
+  template:
+    metadata:
+      {{- with .Values.craneAgent.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: crane-agent
+    spec:
+      containers:
+        - env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+          image: "{{ .Values.craneAgent.image.repository }}:{{ .Values.craneAgent.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy:  {{ .Values.craneAgent.image.pullPolicy }}
+          command:
+            - /crane-agent
+          args:
+          {{- range $key, $value := .Values.craneAgent.containerArgs }}
+          {{- if $value }}
+          - --{{ $key }}={{ $value }}
+          {{- else }}
+          - --{{ $key }}
+          {{- end }}
+          {{- end }}
+          name: crane-agent
+          resources:
+            {{- toYaml .Values.craneAgent.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /sys
+              name: sys
+            - mountPath: /rootvar/run
+              name: run
+      restartPolicy: Always
+      priorityClassName: system-node-critical
+      {{- with .Values.craneAgent.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccount: crane-agent
+      {{- with .Values.craneAgent.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.craneAgent.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.craneAgent.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - hostPath:
+            path: /sys
+            type: ""
+          name: sys
+        - hostPath:
+            path: /var/run
+            type: ""
+          name: run
+{{ end }}
