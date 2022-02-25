@@ -52,8 +52,9 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: readyz
-              port: http
+              path: healthz
+              port: 8082
+              scheme: HTTP
           resources:
             {{- toYaml .Values.craned.resources | nindent 12 }}
       {{- with .Values.craned.nodeSelector }}
