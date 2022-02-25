@@ -29,13 +29,13 @@ serverFiles:
 # must be a string so you have to add a | after extraScrapeConfigs:
 # example adds prometheus-blackbox-exporter scrape config
 extraScrapeConfigs: |-
-  # this is used to scrape cost exporter
-  - job_name: "fadvisor-cost-exporter"
+  # this is used to scrape fadvisor
+  - job_name: "fadvisor"
     honor_timestamps: true
     scheme: http
     metrics_path: /metrics
     static_configs:
-      - targets: ['cost-exporter.crane-system.svc.cluster.local:8081']
+      - targets: ['fadvisor.crane-system.svc.cluster.local:8081']
 
 
 server:
