@@ -30,3 +30,11 @@ helm install crane -n crane-system --create-namespace crane/crane
 ```
 
 you can see [this document](./charts/crane/README.md) to learn more.
+
+**Install Fadvisor**
+
+```console
+helm install fadvisor -n crane-system --create-namespace crane/fadvisor
+```
+
+you can see [this document](./charts/fadvisor/README.md) to learn more.
