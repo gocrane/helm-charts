@@ -55,7 +55,8 @@ spec:
           readinessProbe:
             httpGet:
               path: readyz
-              port: http
+              port: 6443
+              scheme: HTTPS
           volumeMounts:
             - mountPath: /tmp
               name: temp-vol
