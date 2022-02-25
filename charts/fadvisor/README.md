@@ -10,7 +10,7 @@ helm install fadvisor -n crane-system --create-namespace crane/fadvisor
 
 ## Introduction
 
-This chart bootstraps Crane Components on a Kubernetes cluster using the Helm package manager.
+This chart bootstraps Crane Fadvisor on a Kubernetes cluster using the Helm package manager.
 
 ## Prerequisites
 
