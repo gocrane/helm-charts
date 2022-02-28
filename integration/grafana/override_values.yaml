@@ -3208,7 +3208,7 @@ grafana.ini:
   # https://grafana.com/docs/grafana/latest/auth/github/#enable-github-in-grafana
   auth.anonymous:
     # enable anonymous access
-    enabled: false
+    enabled: true
 
     # specify organization name that should be used for unauthenticated users
     org_name: Main Org.
@@ -3237,3 +3237,6 @@ grafana.ini:
     headers: ""
      # Check out docs on this for more details on the below setting
     enable_login_token: false
+
+  server:
+    root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
