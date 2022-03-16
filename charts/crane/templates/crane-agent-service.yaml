@@ -15,4 +15,5 @@ spec:
       targetPort: 8081
   selector:
     app: crane-agent
+  clusterIP: None
 {{ end }}
