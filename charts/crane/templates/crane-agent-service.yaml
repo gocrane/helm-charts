@@ -1,0 +1,18 @@
+{{ if .Values.craneAgent.enable }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "crane.labels" . | nindent 4 }}
+    app: crane-agent
+  name: crane-agent
+  namespace:  {{ .Release.Namespace }}
+spec:
+  ports:
+    - name: health-metric-port
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: crane-agent
+{{ end }}
