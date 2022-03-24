@@ -13,6 +13,7 @@ imagePullSecrets: []
 nameOverride: "fadvisor"
 fullnameOverride: "fadvisor"
 
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
