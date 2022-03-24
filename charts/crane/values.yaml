@@ -78,6 +78,7 @@ craneAgent:
     runtime-endpoint: unix:///rootvar/run/dockershim.sock
     v: 2
 
+
 cranedDashboard:
   image:
     repository: docker.io/gocrane/dashboard
