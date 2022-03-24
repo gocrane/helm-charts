@@ -80,6 +80,6 @@ craneAgent:
 
 cranedDashboard:
   image:
-    fullImageName: docker.io/gocrane/dashboard:v0.2.0
+    repository: docker.io/gocrane/dashboard
     pullPolicy: IfNotPresent
 

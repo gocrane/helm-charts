@@ -61,7 +61,7 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/conf.d/
               name: nginx-conf
-          image: {{ .Values.cranedDashboard.image.fullImageName }}
+          image: "{{ .Values.cranedDashboard.image.repository }}:{{ .Values.cranedDashboard.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.cranedDashboard.image.pullPolicy }}
       {{- with .Values.craned.nodeSelector }}
       nodeSelector:
