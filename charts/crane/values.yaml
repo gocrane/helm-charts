@@ -56,7 +56,7 @@ metricAdapter:
   affinity: { }
 
 craneAgent:
-  enable: false
+  enable: true
 
   image:
     repository: docker.io/gocrane/crane-agent
