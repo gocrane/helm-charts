@@ -76,3 +76,15 @@ The following table lists the configurable parameters of the Crane chart and the
 | `metricAdapter.tolerations`                                | Tolerations of MetricAdapter deployment | `{}` |
 | `metricAdapter.affinity`                                   | Affinity of MetricAdapter deployment | `{}` |
 | `metricAdapter.nodeSelector`                               | Node selectors of MetricAdapter | `{}` |
+| `craneAgent.enable`                                        | Whether to deploy crane agent | true |
+| `craneAgent.image.repository`                              | Image name of Crane Agent  | `docker.io/gocrane/crane-agent` |
+| `craneAgent.image.pullPolicy`                              | Image pullPolicy of Crane Agent | `IfNotPresent` |
+| `craneAgent.image.tag`                                     | Image tag of Crane Agent. Optional, given app version of Helm chart is used by default | `` |
+| `craneAgent.podAnnotations`                                | Pod annotations  of Crane Agent | `{}` |
+| `craneAgent.resources`                                     | Pod resources of Crane Agent | `{}` |
+| `craneAgent.nodeSelector`                                  | Node selectors of Crane Agent | `{}` |
+| `craneAgent.tolerations`                                   | Tolerations of Crane Agent daemonset | `{}` |
+| `craneAgent.affinity`                                      | Affinity of Crane Agent daemonset | `{}` |
+| `craneAgent.containerArgs`                                 | Container's command line arguments to pass to Crane Agent | `{"runtime-endpoint": "unix:///rootvar/run/dockershim.sock", "v": "2"}` |
+| `cranedDashboard.image.repository`                         | Image name of Craned Dashboard  | `docker.io/gocrane/craned` |
+| `cranedDashboard.image.pullPolicy`                         | Image pullPolicy of Craned Dashboard | `IfNotPresent` |
