@@ -3237,6 +3237,3 @@ grafana.ini:
     headers: ""
      # Check out docs on this for more details on the below setting
     enable_login_token: false
-
-  server:
-    root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
