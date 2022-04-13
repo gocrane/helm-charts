@@ -1,0 +1,20 @@
+# Default values for scheduler.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+scheduler:
+  enable: true
+  name: crane-scheduler
+  image:
+    repository: docker.io/gocrane/crane-scheduler
+  replicaCount: 1
+
+controller:
+  enable: true
+  name: crane-scheduler-controller
+  image:
+    repository: docker.io/gocrane/crane-scheduler-controller
+  replicaCount: 1
+
+global:
+  prometheusAddr: http://prometheus-server.crane-system.svc.cluster.local:8080
