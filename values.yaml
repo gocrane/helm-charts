@@ -674,3 +674,8 @@ grafana:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/default
+
+scheduler:
+  enabled: true
+  nameOverride: ""
+  fullnameOverride: "crane-scheduler"

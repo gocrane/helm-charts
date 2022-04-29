@@ -38,3 +38,11 @@ helm install fadvisor -n crane-system --create-namespace crane/fadvisor
 ```
 
 you can see [this document](./charts/fadvisor/README.md) to learn more.
+
+**Install Crane-scheduler**
+
+```console
+helm install scheduler -n crane-system --create-namespace crane/scheduler
+```
+
+you can see [this document](./charts/scheduler/README.md) to learn more.
