@@ -92,6 +92,9 @@ kubeStateMetrics:
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
 ##
 kube-state-metrics:
+  prometheus:
+    monitor:
+      honorLabels: true
   image:
     repository: ccr.ccs.tencentyun.com/tkeimages/kube-state-metrics
     pullPolicy: IfNotPresent
