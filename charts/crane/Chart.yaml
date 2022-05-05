@@ -10,6 +10,7 @@ keywords:
   - hpa
   - vpa
   - resources
+  - qos
 sources:
   - https://github.com/gocrane/crane
 
