@@ -1,0 +1,180 @@
+apiVersion: v1
+entries:
+  cost-exporter:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-05-07T14:58:53.647187+08:00"
+    description: A Helm chart for cost-exporter
+    digest: 053c57164554d2698c3abd063f59359a40b2eca2a7d56eae2d18fb8a844e1b71
+    name: cost-exporter
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/cost-exporter-0.1.0/cost-exporter-0.1.0.tgz
+    version: 0.1.0
+  crane:
+  - apiVersion: v2
+    appVersion: v0.4.0
+    created: "2022-05-07T14:58:55.288776+08:00"
+    description: A Helm chart for Crane
+    digest: 494aa1dbf6e245ca44251dbddc8b86cffce1f74485cfc1f0bba3c9ff8c602207
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    - qos
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.4.0/crane-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: v0.3.0
+    created: "2022-05-07T14:58:54.848537+08:00"
+    description: A Helm chart for Crane
+    digest: d6ea0b83bbe00a3865aefe16f97c626dd34fe6cadac174cc1075920d24ed81af
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.3.0/crane-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: v0.2.0
+    created: "2022-05-07T14:58:54.45097+08:00"
+    description: A Helm chart for Crane
+    digest: 06f637791d9e9bce3fd57c915a282a886a12412f9d610106288e3a55af22c109
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.2.0/crane-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2022-05-07T14:58:54.059417+08:00"
+    description: A Helm chart for Crane
+    digest: 4a7278c279f4c679cca9ab0decac1392555301acf4495acaf1fa08f0f0decc8b
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.1.0/crane-0.1.0.tgz
+    version: 0.1.0
+  craned:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-05-07T14:58:55.684445+08:00"
+    description: A Helm chart for craned
+    digest: 648c66709e67fb2dedfe2fd56980f8a31fbe2c167913a53944a723a1de89b0e5
+    name: craned
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/craned-0.1.0/craned-0.1.0.tgz
+    version: 0.1.0
+  fadvisor:
+  - apiVersion: v2
+    appVersion: v0.3.0
+    created: "2022-05-07T14:58:56.51478+08:00"
+    description: A Helm chart for crane fadvisor
+    digest: 0d2025865f506fdf0bd68e4900736c33729886e0eb0fdfe8bc479495340a889e
+    home: https://github.com/gocrane/fadvisor
+    icon: https://github.com/gocrane/fadvisor/blob/main/docs/images/fadvisor.png
+    keywords:
+    - kubernetes
+    - finops
+    - cost-insighting
+    - resources
+    - cost-visualization
+    - cost-breakdown
+    - cost-comparator
+    - serveless
+    - serverful
+    - multi-cloud
+    name: fadvisor
+    sources:
+    - https://github.com/gocrane/fadvisor
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/fadvisor-0.3.0/fadvisor-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: v0.2.0
+    created: "2022-05-07T14:58:56.072864+08:00"
+    description: A Helm chart for crane fadvisor
+    digest: 3621a8bef7aba95be7560ab10b9717a3fc73dbf0e5e336accf02611f2c6efe4b
+    home: https://github.com/gocrane/fadvisor
+    icon: https://github.com/gocrane/fadvisor/blob/main/docs/images/fadvisor.png
+    keywords:
+    - kubernetes
+    - finops
+    - cost-insighting
+    - resources
+    - cost-visualization
+    - cost-breakdown
+    name: fadvisor
+    sources:
+    - https://github.com/gocrane/fadvisor
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/fadvisor-0.2.0/fadvisor-0.2.0.tgz
+    version: 0.2.0
+  metric-adapter:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-05-07T14:58:56.90238+08:00"
+    description: A Helm chart for metric-adapter
+    digest: f9817a261af1c2a9d070798610ddc826739b6a86c2739cbad76f8fca24f613b5
+    name: metric-adapter
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/metric-adapter-0.1.0/metric-adapter-0.1.0.tgz
+    version: 0.1.0
+  scheduler:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-05-07T14:58:57.334552+08:00"
+    description: deploy crane-scheduler and controller
+    digest: 8aa5353115f12907c83464e68e8c9780e6fc230ff8beb7f184d49606c5aaee10
+    name: scheduler
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.1.0/scheduler-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-05-07T14:58:57.334583+08:00"
