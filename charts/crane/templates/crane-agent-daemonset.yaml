@@ -46,7 +46,7 @@ spec:
           volumeMounts:
             - mountPath: /sys
               name: sys
-            - mountPath: /rootvar/run
+            - mountPath: /run
               name: run
             {{ if contains "CpusetManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}
             - mountPath: /kubelet
@@ -81,7 +81,7 @@ spec:
             type: ""
           name: sys
         - hostPath:
-            path: /var/run
+            path: /run
             type: ""
           name: run
         {{ if contains "CpusetManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}

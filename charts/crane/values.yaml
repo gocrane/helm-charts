@@ -75,7 +75,6 @@ craneAgent:
   affinity: { }
 
   containerArgs:
-    runtime-endpoint: unix:///rootvar/run/dockershim.sock
     v: 2
 
 
