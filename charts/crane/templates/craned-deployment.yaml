@@ -134,8 +134,8 @@ data:
           ehpa.max-cpu-target-utilization: "75"
           ehpa.reference-hpa: "true"
 
+{{ if .Values.cranedDashboard.enable }}
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -254,3 +254,4 @@ data:
             proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
+{{ end }}
