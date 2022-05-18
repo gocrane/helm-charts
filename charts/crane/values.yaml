@@ -79,6 +79,8 @@ craneAgent:
 
 
 cranedDashboard:
+  enable: true
+  
   image:
     repository: docker.io/gocrane/dashboard
     pullPolicy: IfNotPresent

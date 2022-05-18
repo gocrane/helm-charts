@@ -57,12 +57,14 @@ spec:
               scheme: HTTP
           resources:
             {{- toYaml .Values.craned.resources | nindent 12 }}
+        {{ if .Values.cranedDashboard.enable }}
         - name: dashboard
           volumeMounts:
             - mountPath: /etc/nginx/conf.d/
               name: nginx-conf
           image: "{{ .Values.cranedDashboard.image.repository }}:{{ .Values.cranedDashboard.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.cranedDashboard.image.pullPolicy }}
+        {{ end }}
       {{- with .Values.craned.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -83,9 +85,11 @@ spec:
         - name: config
           configMap:
             name: recommendation-config
+        {{ if .Values.cranedDashboard.enable }}
         - name: nginx-conf
           configMap:
             name: nginx-conf
+        {{ end }}
 
 ---
 apiVersion: v1
@@ -130,8 +134,8 @@ data:
           ehpa.max-cpu-target-utilization: "75"
           ehpa.reference-hpa: "true"
 
+{{ if .Values.cranedDashboard.enable }}
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -250,3 +254,4 @@ data:
             proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
+{{ end }}
