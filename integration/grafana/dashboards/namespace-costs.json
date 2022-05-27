@@ -204,8 +204,8 @@
           "expr": "sum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node)\n) * ($Discount/100.)",
           "instant": false,
           "interval": "1h",
-          "legendFormat": "requests-costs",
-          "refId": "A"
+          "legendFormat": "usage-costs",
+          "refId": "B"
         },
         {
           "datasource": {
@@ -216,8 +216,8 @@
           "expr": "sum(\n  sum(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", namespace=\"$namespace\"} / 1024./ 1024. / 1024.) by (container, pod, node, namespace) * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * ($Discount/100.)",
           "hide": false,
           "interval": "1h",
-          "legendFormat": "usage-costs",
-          "refId": "B"
+          "legendFormat": "requests-costs",
+          "refId": "A"
         }
       ],
       "title": "RAM Hourly Costs Over Time By Namespace ${namespace}",
