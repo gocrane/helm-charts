@@ -61,12 +61,20 @@ extraScrapeConfigs: |-
     metrics_path: /metrics
     static_configs:
       - targets: ['fadvisor.crane-system.svc.cluster.local:8081']
-  - job_name: "craned"
-    honor_timestamps: true
-    scheme: http
-    metrics_path: /metrics
-    static_configs:
-      - targets: ['craned.crane-system.svc.cluster.local:8080']
+  - job_name: crane
+    kubernetes_sd_configs:
+    - role: pod
+    relabel_configs:
+    - action: keep
+      regex: crane-system;craned-(.+)
+      source_labels:
+      - __meta_kubernetes_namespace
+      - __meta_kubernetes_pod_name
+    - source_labels:
+      - __address__
+      regex: (.*)
+      replacement: "${1}:8080"
+      target_label: __address__
 
 server:
   service:
