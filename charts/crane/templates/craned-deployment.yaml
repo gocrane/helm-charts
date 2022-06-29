@@ -50,6 +50,11 @@ spec:
             - name: http
               containerPort: 9443
               protocol: TCP
+          env:
+            - name: CRANE_SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           readinessProbe:
             httpGet:
               path: /api/healthz
