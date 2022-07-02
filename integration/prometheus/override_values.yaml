@@ -61,7 +61,20 @@ extraScrapeConfigs: |-
     metrics_path: /metrics
     static_configs:
       - targets: ['fadvisor.crane-system.svc.cluster.local:8081']
-
+  - job_name: crane
+    kubernetes_sd_configs:
+    - role: pod
+    relabel_configs:
+    - action: keep
+      regex: crane-system;craned-(.+)
+      source_labels:
+      - __meta_kubernetes_namespace
+      - __meta_kubernetes_pod_name
+    - source_labels:
+      - __address__
+      regex: (.*)
+      replacement: "${1}:8080"
+      target_label: __address__
 
 server:
   service:
@@ -92,6 +105,9 @@ kubeStateMetrics:
 ## Please see https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics
 ##
 kube-state-metrics:
+  prometheus:
+    monitor:
+      honorLabels: true
   image:
     repository: ccr.ccs.tencentyun.com/tkeimages/kube-state-metrics
     pullPolicy: IfNotPresent

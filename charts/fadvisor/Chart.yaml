@@ -10,11 +10,15 @@ keywords:
   - resources
   - cost-visualization
   - cost-breakdown
+  - cost-comparator
+  - serveless
+  - serverful
+  - multi-cloud
 sources:
   - https://github.com/gocrane/fadvisor
 
 type: application
 
-version: 0.2.0
+version: 0.3.0
 
-appVersion: v0.2.0
+appVersion: v0.3.0

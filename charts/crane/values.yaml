@@ -75,11 +75,12 @@ craneAgent:
   affinity: { }
 
   containerArgs:
-    runtime-endpoint: unix:///rootvar/run/dockershim.sock
     v: 2
 
 
 cranedDashboard:
+  enable: true
+  
   image:
     repository: docker.io/gocrane/dashboard
     pullPolicy: IfNotPresent

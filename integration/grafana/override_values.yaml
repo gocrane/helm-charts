@@ -3239,4 +3239,5 @@ grafana.ini:
     enable_login_token: false
 
   server:
+    serve_from_sub_path: true
     root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
