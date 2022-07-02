@@ -1,0 +1,13 @@
+---
+# See https://github.com/helm/chart-testing#configuration
+remote: origin
+target-branch: main
+chart-dirs:
+  - charts
+chart-repos:
+  - gocrane=https://gocrane.github.io/helm-charts
+  - prometheus=https://prometheus-community.github.io/helm-charts
+  - grafana=https://grafana.github.io/helm-charts
+helm-extra-args: --timeout 600s
+validate-maintainers: false
+check-version-increment: false
