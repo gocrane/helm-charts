@@ -29,6 +29,13 @@ spec:
         - name: craned
           image: "{{ .Values.craned.image.repository }}:{{ .Values.craned.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.craned.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+            - name: CRANE_SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           command:
             - /craned
           args:
@@ -185,7 +192,7 @@ data:
     }
 
     upstream cluster {
-        server craned.crane-system:8082;
+        server craned.{{ .Release.Namespace }}:8082;
     }
 
     resolver kube-dns.kube-system.svc.cluster.local valid=5s;
@@ -205,7 +212,7 @@ data:
             try_files $uri $uri/ /index.html;
         }
         location /grafana {
-            set $upstream_grafana grafana.crane-system.svc.cluster.local;
+            set $upstream_grafana grafana.{{ .Release.Namespace }}.svc.cluster.local;
             proxy_connect_timeout       180;
             proxy_send_timeout          180;
             proxy_read_timeout          180;
