@@ -7,7 +7,7 @@ scheduler:
   name: crane-scheduler
   image:
     repository: docker.io/gocrane/crane-scheduler
-    tag: 0.0.23
+    tag: 0.1.23
   replicaCount: 1
 
 controller:

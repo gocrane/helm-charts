@@ -6,7 +6,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   scheduler-config.yaml: |
+    {{- if ge .Capabilities.KubeVersion.Minor "22" }}
     apiVersion: kubescheduler.config.k8s.io/v1beta2
+    {{- else }}
+    apiVersion: kubescheduler.config.k8s.io/v1beta1
+    {{- end }}
     kind: KubeSchedulerConfiguration
     leaderElection:
       leaderElect: false
