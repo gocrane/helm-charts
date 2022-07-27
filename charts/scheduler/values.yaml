@@ -17,6 +17,19 @@ controller:
     repository: docker.io/gocrane/crane-scheduler-controller
     tag: 0.0.23
   replicaCount: 1
+  livenessProbe:
+    failureThreshold: 3
+    httpGet:
+      path: /healthz
+      port: 8090
+      scheme: HTTP
+    initialDelaySeconds: 15
+    periodSeconds: 10
+  readinessProbe:
+    httpGet:
+      path: /healthz
+      port: 8090
+      scheme: HTTP
 
 global:
   prometheusAddr: http://prometheus-server.crane-system.svc.cluster.local:8080
