@@ -3140,4 +3140,4 @@ metadata:
     dashboard-provider: default
     grafana_dashboard: "true"
   name: grafana-dashboards-default
-  namespace: crane-system
+  namespace: {{ .Release.Namespace }}

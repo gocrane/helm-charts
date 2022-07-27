@@ -125,7 +125,7 @@ webhooks:
       caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
       service:
         name: craned
-        namespace: crane-system
+        namespace: {{ .Release.Namespace }}
         path: /validate-ensurance-crane-io-v1alpha1-nodeqosensurancepolicy
     failurePolicy: Fail
     name: vnodeqosensurancepolicies.ensurance.crane.io
