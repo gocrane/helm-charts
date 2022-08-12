@@ -72,7 +72,7 @@ extraScrapeConfigs: |-
       - __meta_kubernetes_pod_name
     - source_labels:
       - __address__
-      regex: (.*)
+      regex: ([^:]+)(?::\d+)?
       replacement: "${1}:8080"
       target_label: __address__
 
