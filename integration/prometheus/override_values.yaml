@@ -75,7 +75,20 @@ extraScrapeConfigs: |-
       regex: ([^:]+)(?::\d+)?
       replacement: "${1}:8080"
       target_label: __address__
-
+  - job_name: crane-agent
+    kubernetes_sd_configs:
+    - role: pod
+    relabel_configs:
+    - action: keep
+      regex: crane-system;crane-agent-(.+)
+      source_labels:
+      - __meta_kubernetes_namespace
+      - __meta_kubernetes_pod_name
+    - source_labels:
+      - __address__
+      regex: ([^:]+)(?::\d+)?
+      replacement: "${1}:8081"
+      target_label: __address__
 server:
   service:
     annotations: { }
