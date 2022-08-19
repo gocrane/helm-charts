@@ -39,7 +39,7 @@ spec:
           command:
             - /craned
           args:
-            - --recommendation-config-file=/tmp/recommendation-config/config_set.yaml
+            - --recommendation-configuration-file=/tmp/recommendation-config/config.yaml
           {{- range $key, $value := .Values.craned.containerArgs }}
             {{- if $value }}
             - --{{ $key }}={{ $value }}
@@ -91,7 +91,7 @@ spec:
             secretName: webhook-server-tls
         - name: config
           configMap:
-            name: recommendation-config
+            name: recommendation-configuration
         {{ if .Values.cranedDashboard.enable }}
         - name: nginx-conf
           configMap:
@@ -116,30 +116,27 @@ type: kubernetes.io/tls
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: recommendation-config
+  name: recommendation-configuration
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "crane.labels" . | nindent 4 }}
 data:
-  config_set.yaml: |-
+  config.yaml: |-
     apiVersion: analysis.crane.io/v1alpha1
-    kind: ConfigSet
-    configs:
-      - targets: []
-        properties:
-          resource.cpu-request-percentile: "0.98"
-          replicas.workload-min-replicas: "3"
-          replicas.pod-min-ready-seconds: "30"
-          replicas.pod-available-ratio: "0.5"
-          replicas.default-min-replicas: "3"
-          replicas.max-replicas-factor: "3"
-          replicas.min-cpu-usage-threshold: "0.1"
-          replicas.fluctuation-threshold: "1.0"
-          replicas.min-cpu-target-utilization: "30"
-          replicas.max-cpu-target-utilization: "75"
-          replicas.cpu-target-utilization: "30"
-          replicas.cpu-percentile: "95"
-          replicas.reference-hpa: "true"
+    kind: RecommendationConfiguration
+    recommenders:
+      - name: Replicas
+        acceptedResources:
+          - kind: Deployment
+            apiVersion: apps/v1
+          - kind: StatefulSet
+            apiVersion: apps/v1
+      - name: Resource
+        acceptedResources:
+          - kind: Deployment
+            apiVersion: apps/v1
+          - kind: StatefulSet
+            apiVersion: apps/v1
 
 {{ if .Values.cranedDashboard.enable }}
 ---
