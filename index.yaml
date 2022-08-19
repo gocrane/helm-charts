@@ -13,6 +13,28 @@ entries:
     version: 0.1.0
   crane:
   - apiVersion: v2
+    appVersion: v0.7.0
+    created: "2022-08-19T09:46:45.484909072Z"
+    description: A Helm chart for Crane
+    digest: 298048480fe0ac84bc1c48d6dde4866b05c6d2073de3382b640f5c3617aac17b
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    - qos
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.7.0/crane-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
     appVersion: v0.6.0
     created: "2022-07-15T07:33:29.241235005Z"
     description: A Helm chart for Crane
@@ -212,6 +234,16 @@ entries:
     version: 0.1.0
   scheduler:
   - apiVersion: v2
+    appVersion: 0.2.1
+    created: "2022-08-19T09:46:45.609010774Z"
+    description: deploy crane-scheduler and controller
+    digest: 5bb7f6cdc509f1700dc413727c3babf218d457355e4053c317b6f5ba9c910ee4
+    name: scheduler
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.2.1/scheduler-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: 0.2.0
     created: "2022-07-15T07:33:29.398942812Z"
     description: deploy crane-scheduler and controller
@@ -231,4 +263,4 @@ entries:
     urls:
     - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.1.0/scheduler-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-15T07:33:29.398970912Z"
+generated: "2022-08-19T09:46:45.609160373Z"
