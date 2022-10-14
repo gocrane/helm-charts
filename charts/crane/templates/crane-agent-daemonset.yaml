@@ -48,9 +48,9 @@ spec:
               name: sys
             - mountPath: /run
               name: run
-            {{ if contains "CpusetManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}
-            - mountPath: /kubelet
-              name: kubelet
+            {{ if contains "CraneCPUManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}
+            - mountPath: /var/lib/kubelet
+              name: kubelet-root-path
             {{ end }}
           livenessProbe:
             httpGet:
@@ -62,7 +62,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccount: crane-agent
+      serviceAccountName: crane-agent
       {{- with .Values.craneAgent.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -84,10 +84,10 @@ spec:
             path: /run
             type: ""
           name: run
-        {{ if contains "CpusetManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}
+        {{ if contains "CraneCPUManager=true" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}
         - hostPath:
             path: /var/lib/kubelet
             type: ""
-          name: kubelet
+          name: kubelet-root-path
         {{ end }}
 {{ end }}
