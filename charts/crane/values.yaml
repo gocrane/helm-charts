@@ -85,3 +85,4 @@ cranedDashboard:
     repository: docker.io/gocrane/dashboard
     pullPolicy: IfNotPresent
 
+
