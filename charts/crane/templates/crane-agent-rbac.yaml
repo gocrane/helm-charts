@@ -55,7 +55,7 @@ rules:
   - apiGroups:
       - "ensurance.crane.io"
     resources:
-      - nodeqosensurancepolicies
+      - nodeqoss
     verbs:
       - get
       - list
@@ -65,7 +65,7 @@ rules:
   - apiGroups:
       - "ensurance.crane.io"
     resources:
-      - podqosensurancepolicies
+      - podqoss
     verbs:
       - get
       - list
