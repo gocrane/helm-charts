@@ -9,7 +9,7 @@ craned:
 
   containerArgs:
     prometheus-address: http://prometheus-server.crane-system.svc.cluster.local:8080
-    feature-gates: Analysis=true,TimeSeriesPrediction=true,Autoscaling=true
+    feature-gates: Analysis=true,TimeSeriesPrediction=true,Autoscaling=true,NodeResource=false
     v: 2
 
   podAnnotations: { }
