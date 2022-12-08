@@ -1,3 +1,5 @@
+{{ if .Values.metricAdapter.enable }}
+{{ if .Values.metricAdapter.installApiService }}
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
 metadata:
@@ -13,3 +15,5 @@ spec:
   insecureSkipTLSVerify: true
   groupPriorityMinimum: 100
   versionPriority: 100
+{{ end }}
+{{ end }}

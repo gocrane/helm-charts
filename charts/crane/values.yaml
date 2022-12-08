@@ -23,6 +23,9 @@ craned:
   affinity: { }
 
 metricAdapter:
+  enable: true
+  installApiService: true
+
   image:
     repository: docker.io/gocrane/metric-adapter
     pullPolicy: IfNotPresent

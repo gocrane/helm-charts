@@ -1,3 +1,4 @@
+{{ if .Values.metricAdapter.enable }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,3 +78,4 @@ spec:
       volumes:
         - name: temp-vol
           emptyDir: {}
+{{ end }}
