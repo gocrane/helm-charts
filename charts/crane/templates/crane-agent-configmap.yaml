@@ -1,3 +1,4 @@
+{{ if .Values.craneAgent.enable }}
 {{ if contains "NodeResource=false" (index .Values.craneAgent.containerArgs "feature-gates" | default "") }}{{else}}
 apiVersion: v1
 data:
@@ -23,5 +24,6 @@ data:
 kind: ConfigMap
 metadata:
   name: noderesource-tsp-template
-  namespace: default
+  namespace: {{ .Release.Namespace }}
+{{end}}
 {{end}}
