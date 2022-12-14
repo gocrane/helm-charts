@@ -79,6 +79,7 @@ craneAgent:
 
   containerArgs:
     v: 2
+    feature-gates: NodeResource=false
 
 
 cranedDashboard:
