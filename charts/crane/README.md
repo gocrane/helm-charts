@@ -63,7 +63,9 @@ The following table lists the configurable parameters of the Crane chart and the
 | `craned.tolerations`                                       | Tolerations of Craned deployment | `{}` |
 | `craned.affinity`                                          | Affinity of Craned deployment | `{}` |
 | `craned.nodeSelector`                                      | Node selectors of Craned | `{}` |
-| `metricAdapter.image.repository`                           | Image name of MetricAdapter                      | `docker.io/gocrane/metric-adapter`                |
+| `metricAdapter.enable`                                     | Whether to deploy MetricAdapter                      | `true`                |
+| `metricAdapter.installApiService`                          | Whether to install Crane ApiService for EHPA         | `true`                |
+| `metricAdapter.image.repository`                           | Image name of MetricAdapter                      | `docker.io/gocrane/metric-adapter`    |
 | `metricAdapter.image.tag`                                  | Image tag of MetricAdapter. Optional, given app version of Helm chart is used by default | `` |
 | `metricAdapter.image.pullPolicy`                           | Image pullPolicy of MetricAdapter | `IfNotPresent` |
 | `metricAdapter.replicaCount`                               | Replica count of MetricAdapter | `1` |
@@ -86,5 +88,6 @@ The following table lists the configurable parameters of the Crane chart and the
 | `craneAgent.tolerations`                                   | Tolerations of Crane Agent daemonset | `{}` |
 | `craneAgent.affinity`                                      | Affinity of Crane Agent daemonset | `{}` |
 | `craneAgent.containerArgs`                                 | Container's command line arguments to pass to Crane Agent | `{"runtime-endpoint": "unix:///rootvar/run/dockershim.sock", "v": "2"}` |
+| `cranedDashboard.enable`                                   | Whether to deploy Crane dashboard                      | `true`                |
 | `cranedDashboard.image.repository`                         | Image name of Craned Dashboard  | `docker.io/gocrane/craned` |
 | `cranedDashboard.image.pullPolicy`                         | Image pullPolicy of Craned Dashboard | `IfNotPresent` |
