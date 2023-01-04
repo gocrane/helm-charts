@@ -3182,7 +3182,7 @@ dashboards:
            "version": 6,
            "weekStart": ""
          }
-     namespace-costs:
+     node-analysis:
        json: |
          {
            "annotations": {
