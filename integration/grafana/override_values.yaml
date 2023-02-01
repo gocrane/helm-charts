@@ -2731,9 +2731,7 @@ dashboards:
            "title": "Costs by Dimension",
            "uid": "Pq1y8i07z",
            "version": 2,
-           "
-           
-           ": ""
+           "weekStart": ""
          }
      namespace-costs:
        json: |
