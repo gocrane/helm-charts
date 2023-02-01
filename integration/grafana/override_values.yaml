@@ -3265,7 +3265,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by(pod) (container_memory_usage_bytes{node=\"$node\", pod!=\"\",container!=\"POD\", container!=\"\",image!=\"\"} / on(node) group_left() machine_memory_bytes{node=\"$node\"} )",
@@ -3357,7 +3357,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", node=~\"$node\"}) by (pod)",
@@ -3447,7 +3447,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity_memory_bytes)",
@@ -3537,7 +3537,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by (node) (container_memory_usage_bytes{container!=\"POD\", container!=\"\",image!=\"\"})/sum by (node) (kube_node_status_capacity_memory_bytes)",
@@ -3631,7 +3631,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by (node) (irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[5m]))/sum by (node) (kube_node_status_capacity_cpu_cores)",
@@ -3724,7 +3724,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity_cpu_cores)",
@@ -3810,7 +3810,7 @@ dashboards:
                  {
                    "datasource": {
                      "type": "prometheus",
-                     "uid": "${DS_PROMETHEUS}"
+                     "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
                    "expr": "sum by (node)  (kube_node_spec_taint{effect=\"PreferNoSchedule\",key=\"interference.crane.io\"}==1)",
@@ -3860,7 +3860,7 @@ dashboards:
                  "current": {},
                  "datasource": {
                    "type": "prometheus",
-                   "uid": "${DS_PROMETHEUS}"
+                   "uid": "PBFA97CFB590B2093"
                  },
                  "definition": "label_values(node_uname_info, nodename)",
                  "hide": 0,
@@ -3882,7 +3882,7 @@ dashboards:
                  "current": {},
                  "datasource": {
                    "type": "prometheus",
-                   "uid": "${DS_PROMETHEUS}"
+                   "uid": "PBFA97CFB590B2093"
                  },
                  "definition": "label_values(node_uname_info{nodename=\"$node\"}, instance)",
                  "hide": 0,
@@ -3904,7 +3904,7 @@ dashboards:
                  "current": {},
                  "datasource": {
                    "type": "prometheus",
-                   "uid": "${DS_PROMETHEUS}"
+                   "uid": "PBFA97CFB590B2093"
                  },
                  "definition": "label_values(kube_pod_info, cluster)",
                  "hide": 2,
