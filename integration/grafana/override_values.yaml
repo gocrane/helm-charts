@@ -238,7 +238,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum (\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n\n+\n\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * 730 * ($Discount/100.)",
+                  "expr": "sum (\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n\n+\n\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * 730 * ($Discount/100.)",
                   "format": "table",
                   "instant": true,
                   "interval": "",
@@ -605,7 +605,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum(\n  label_replace(container_memory_usage_bytes{namespace!=\"\",container!=\"POD\", container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",\"(.+)\")  \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) * 100\n\n/\nsum(\n  kube_node_status_capacity{resource=\"memory\", unit=\"byte\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)",
+                  "expr": "sum(\n  label_replace(container_memory_usage_bytes{namespace!=\"\",container!=\"POD\", container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",\"([0-9.]*)\")  \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) * 100\n\n/\nsum(\n  kube_node_status_capacity{resource=\"memory\", unit=\"byte\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)",
                   "format": "table",
                   "hide": false,
                   "instant": true,
@@ -633,7 +633,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum(\n\n  sum(\n    label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\") \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n  ) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n\n  * on (node) group_left()\n\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node)\n  \n) by (node)  * ($Discount/100.)\n",
+                  "expr": "sum(\n\n  sum(\n    label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\") \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n  ) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n\n  * on (node) group_left()\n\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node)\n  \n) by (node)  * ($Discount/100.)\n",
                   "format": "table",
                   "hide": false,
                   "instant": true,
@@ -761,7 +761,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) \n\n* 100",
+                  "expr": "sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) \n\n* 100",
                   "hide": false,
                   "interval": "",
                   "legendFormat": "",
@@ -925,7 +925,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum(label_replace(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",  \"(.*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n* 100",
+                  "expr": "sum(label_replace(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n* 100",
                   "format": "time_series",
                   "interval": "",
                   "intervalFactor": 1,
@@ -1216,7 +1216,7 @@ dashboards:
                     "uid": "PBFA97CFB590B2093"
                   },
                   "exemplar": false,
-                  "expr": "sum(\nlabel_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\") \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n)\n/\nsum(\nkube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) \n\n* 100",
+                  "expr": "sum(\nlabel_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\") \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n)\n/\nsum(\nkube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) \n\n* 100",
                   "format": "time_series",
                   "interval": "",
                   "intervalFactor": 1,
@@ -1853,7 +1853,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n  \n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace) * ($Discount/100.0)",
+                   "expr": "sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n  \n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace) * ($Discount/100.0)",
                    "interval": "1h",
                    "legendFormat": "{{namespace}}",
                    "refId": "A"
@@ -1938,7 +1938,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace) * ($Discount/100.0)",
+                   "expr": "sum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace) * ($Discount/100.0)",
                    "interval": "1h",
                    "legendFormat": "{{namespace}}",
                    "refId": "A"
@@ -2023,7 +2023,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum(\n\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n\n  ) by (namespace) * ($Discount/100.0)",
+                   "expr": "sum(\n\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n\n  ) by (namespace) * ($Discount/100.0)",
                    "interval": "1h",
                    "legendFormat": "{{namespace}}",
                    "refId": "A"
@@ -2124,7 +2124,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace)  * 730 * ($Discount/100.0)",
+                   "expr": "sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (namespace)  * 730 * ($Discount/100.0)",
                    "format": "table",
                    "instant": true,
                    "interval": "",
@@ -2392,7 +2392,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace)) * ($Discount/100.0)",
+                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace)) * ($Discount/100.0)",
                    "format": "table",
                    "hide": false,
                    "instant": true,
@@ -2525,7 +2525,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace) * ($Discount/100.0) )",
+                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace) * ($Discount/100.0) )",
                    "format": "table",
                    "hide": false,
                    "instant": true,
@@ -2664,7 +2664,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace) * ($Discount/100.0))",
+                   "expr": "topk(20, sum (\nsum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) * on (node) group_left()\n  avg(avg_over_time(node_cpu_hourly_cost[1h])) by (node)\n\n+\n\nsum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 * on (node) group_left()\n  avg(avg_over_time(node_ram_hourly_cost[1h])) by (node)\n) by (container, pod, node, namespace) * ($Discount/100.0))",
                    "format": "table",
                    "instant": true,
                    "interval": "",
@@ -2852,7 +2852,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "sum(\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n) * ($Discount/100.)",
+                   "expr": "sum(\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n) * ($Discount/100.)",
                    "hide": false,
                    "interval": "1h",
                    "legendFormat": "usage-costs",
@@ -2938,7 +2938,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "sum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node)\n) * ($Discount/100.)",
+                   "expr": "sum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node)\n) * ($Discount/100.)",
                    "instant": false,
                    "interval": "1h",
                    "legendFormat": "requests-costs",
@@ -3048,7 +3048,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": false,
-                   "expr": "sum(\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n) * ($Discount/100.)\n+\nsum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * ($Discount/100.)",
+                   "expr": "sum(\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n) * ($Discount/100.)\n+\nsum(\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\",namespace=\"$namespace\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * ($Discount/100.)",
                    "hide": false,
                    "interval": "1h",
                    "legendFormat": "usage-costs",
