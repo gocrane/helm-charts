@@ -3358,7 +3358,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", node=~\"$node\"}) by (pod)",
+                   "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", node=~\"$node\",pod!=\"\"}) by (pod)",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3448,7 +3448,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
+                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\",pod!=\"\"})/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3632,7 +3632,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (label_replace(irate(container_cpu_usage_seconds_total{}[5m]), \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
+                   "expr": "sum by (node) (label_replace(irate(container_cpu_usage_seconds_total{pod!=\"\"}[5m]), \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3725,7 +3725,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
+                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\",pod!=\"\"})/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
                    "format": "time_series",
                    "interval": "",
                    "legendFormat": "",
