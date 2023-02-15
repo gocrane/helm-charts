@@ -3266,7 +3266,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by(pod) (container_memory_usage_bytes{node=\"$node\", pod!=\"\",container!=\"POD\", container!=\"\",image!=\"\"} / on(node) group_left() machine_memory_bytes{node=\"$node\"} )",
+                   "expr": "sum by(pod) (container_memory_usage_bytes{kubernetes_io_hostname=\"$node\", pod!=\"\"} / on(node) group_left() machine_memory_bytes{kubernetes_io_hostname=\"$node\"} )",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3448,7 +3448,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity_memory_bytes)",
+                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3538,7 +3538,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (container_memory_usage_bytes{container!=\"POD\", container!=\"\",image!=\"\"})/sum by (node) (kube_node_status_capacity_memory_bytes)",
+                   "expr": "sum by (node) (label_replace(container_memory_usage_bytes{}, \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3632,7 +3632,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[5m]))/sum by (node) (kube_node_status_capacity_cpu_cores)",
+                   "expr": "sum by (node) (label_replace(irate(container_cpu_usage_seconds_total{}[5m]), \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
@@ -3725,7 +3725,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})/sum by (node) (kube_node_status_capacity_cpu_cores)",
+                   "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})/sum by (node) ({resource=\"cpu\", unit=\"core\",node!=\"miner-virtual-kubelet\"})",
                    "format": "time_series",
                    "interval": "",
                    "legendFormat": "",
