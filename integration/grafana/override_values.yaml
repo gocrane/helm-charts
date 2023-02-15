@@ -3538,7 +3538,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node) (label_replace(container_memory_usage_bytes{}, \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
+                   "expr": "sum by (node) (label_replace(container_memory_usage_bytes{pod!=""}, \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\"))/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!=\"miner-virtual-kubelet\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
