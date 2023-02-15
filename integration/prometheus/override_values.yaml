@@ -48,6 +48,11 @@ serverFiles:
             expr: max_over_time(mem_usage_avg_5m[1h])
           - record: mem_usage_max_avg_1d
             expr: max_over_time(mem_usage_avg_5m[1d])
+      - name: node.analysis.rules.30s
+        interval: 30s
+        rules:
+          - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+            expr: sum by(namespace, pod) (rate(container_cpu_usage_seconds_total{}[5m])) * on(namespace, pod) group_left(node) topk by(namespace, pod) (1, max by(namespace, pod, node) (kube_pod_info{node!=""}))
 
 
 # adds additional scrape configs to prometheus.yml
