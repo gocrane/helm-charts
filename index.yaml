@@ -278,6 +278,16 @@ entries:
     version: 0.1.0
   scheduler:
   - apiVersion: v2
+    appVersion: 0.2.2
+    created: "2023-02-22T07:16:55.745164478Z"
+    description: deploy crane-scheduler and controller
+    digest: ebdb4aab9bee080c1302f706e3eacec2eb2d8adf4fc0a3a1b4ffc4885809c858
+    name: scheduler
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.2.2/scheduler-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     appVersion: 0.2.1
     created: "2022-08-19T09:46:45.609010774Z"
     description: deploy crane-scheduler and controller
@@ -307,4 +317,4 @@ entries:
     urls:
     - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.1.0/scheduler-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-16T07:45:22.650801498Z"
+generated: "2023-02-22T07:16:55.745230179Z"
