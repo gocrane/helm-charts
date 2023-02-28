@@ -6718,7 +6718,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by(pod) (label_replace(container_memory_usage_bytes{kubernetes_io_hostname=\"$node\", pod!=\"\"}, \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\")/on(node) group_left() node_memory_MemTotal_bytes{node=\"$node\"})"
+                   "expr": "sum by(pod) (label_replace(container_memory_usage_bytes{kubernetes_io_hostname=\"$node\", pod!=\"\"}, \"node\", \"$1\", \"kubernetes_io_hostname\",  \"(.*)\")/on(node) group_left() node_memory_MemTotal_bytes{node=\"$node\"})",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
