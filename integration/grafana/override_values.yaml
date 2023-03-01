@@ -7263,7 +7263,7 @@ dashboards:
                      "uid": "PBFA97CFB590B2093"
                    },
                    "exemplar": true,
-                   "expr": "sum by (node)  (kube_node_spec_taint{effect=\"PreferNoSchedule\",key=\"interference.crane.io\"}==1)",
+                   "expr": "sum by (node)  (sum by (node) (kube_node_spec_unschedulable==1))",
                    "interval": "",
                    "legendFormat": "",
                    "refId": "A"
