@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,11 +26,28 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 6873,
   "graphTooltip": 0,
-  "iteration": 1641381016806,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 139,
+      "panels": [],
+      "title": "Cost Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Monthly estimated costs according to latest 1 hour resource usage, Note, if you use virtual kubelet or EKS Pod, we do not compute the virtual node costs.",
       "fieldConfig": {
         "defaults": {
@@ -141,11 +161,13 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 136,
       "options": {
         "displayMode": "basic",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -156,7 +178,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
@@ -191,7 +213,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "exemplar": false,
-          "expr": "sum (\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n\n+\n\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * 730 * ($Discount/100.)",
+          "expr": "sum (\n  sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\",label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node) \n  ) by (node)\n\n+\n\n  sum(label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"([0-9.]*)\")) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n  * on (node) group_left()\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}\n    ) by (node)\n  ) by (node) \n) * 730 * ($Discount/100.)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -259,6 +281,10 @@
       "type": "bargauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "This table shows the comparison of application CPU usage vs the capacity of the node (measured over last 60 minutes)",
       "fieldConfig": {
         "defaults": {
@@ -268,7 +294,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [
             {
@@ -457,7 +484,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 8
       },
       "hideTimeOverride": true,
       "id": 90,
@@ -478,7 +505,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "repeatDirection": "v",
       "targets": [
         {
@@ -486,6 +513,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
           "expr": "sum(\n  kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) \n\n/\n\nsum(\n  kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) \n\n* 100",
           "format": "table",
@@ -500,8 +528,9 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\") \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)\n/\nsum(\n  kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) by (node) \n\n* 100",
+          "expr": "sum(\n  label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"^[^:]+\") \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)\n/\nsum(\n  kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) by (node) \n\n* 100",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -515,6 +544,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
           "expr": "avg(\n  avg_over_time(node_cpu_hourly_cost[1h]) \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)  * ($Discount/100.)",
           "format": "table",
@@ -529,8 +559,9 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n\n  sum(\n    label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")  \n     * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (container, pod, node, namespace) \n\n  * on (node) group_left() \n \n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h])  \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node) \n\n) by (node)  * ($Discount/100.)",
+          "expr": "sum(\n\n  sum(\n    label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\")  \n     * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (container, pod, node, namespace) \n\n  * on (node) group_left() \n \n  avg(\n    avg_over_time(node_cpu_hourly_cost[1h])  \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node) \n\n) by (node)  * ($Discount/100.)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -557,8 +588,9 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  label_replace(container_memory_usage_bytes{namespace!=\"\",container!=\"POD\", container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",\"(.+)\")  \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) * 100\n\n/\nsum(\n  kube_node_status_capacity{resource=\"memory\", unit=\"byte\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)",
+          "expr": "sum(\n  label_replace(container_memory_usage_bytes{container!=\"\"}, \"node\", \"$1\", \"instance\",\"(^[^:]+)\")  \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node) * 100\n\n/\nsum(\n  kube_node_status_capacity{resource=\"memory\", unit=\"byte\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -585,8 +617,9 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n\n  sum(\n    label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\") \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n  ) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n\n  * on (node) group_left()\n\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node)\n  \n) by (node)  * ($Discount/100.)\n",
+          "expr": "sum(\n\n  sum(\n    label_replace(avg_over_time(container_memory_working_set_bytes{container!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\") \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n  ) by (container, pod, node, namespace) / 1024.0 / 1024.0 / 1024.0 \n\n  * on (node) group_left()\n\n  avg(\n    avg_over_time(node_ram_hourly_cost[1h]) \n    * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n  ) by (node)\n  \n) by (node)  * ($Discount/100.)\n",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -609,7 +642,7 @@
           "refId": "Node-Hourly-Total-Cost"
         }
       ],
-      "title": "resource cost & utilization by node",
+      "title": "Node Resource Cost & Utilization",
       "transformations": [
         {
           "id": "merge",
@@ -632,18 +665,35 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 14
       },
       "id": 133,
       "panels": [],
-      "title": "Clutser Utilization",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Cluster Utilization Overview",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Current CPU utilization from applications usage vs allocatable CPU",
       "fieldConfig": {
         "defaults": {
@@ -689,7 +739,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "id": 91,
       "links": [],
@@ -706,18 +756,20 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) \n\n* 100",
+          "expr": "sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[5m]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) \n\n* 100",
           "hide": false,
           "interval": "",
           "legendFormat": "",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -725,6 +777,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Current CPU reservation requests from applications vs allocatable CPU",
       "fieldConfig": {
         "defaults": {
@@ -770,7 +826,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 14
+        "y": 15
       },
       "id": 134,
       "links": [],
@@ -787,19 +843,21 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n/ \nsum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n* 100",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n/ \nsum(kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n* 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 10
         }
@@ -808,6 +866,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Current RAM use vs RAM available",
       "fieldConfig": {
         "defaults": {
@@ -852,7 +914,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 14
+        "y": 15
       },
       "hideTimeOverride": true,
       "id": 80,
@@ -870,19 +932,21 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(label_replace(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",image!=\"\"}, \"node\", \"$1\", \"instance\",  \"(.*)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n* 100",
+          "expr": "sum(label_replace(container_memory_working_set_bytes{container!=\"\"}, \"node\", \"$1\", \"instance\",  \"(^[^:]+)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))\n\n/\n\nsum(kube_node_status_capacity{resource=\"memory\", unit=\"byte\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) ) \n* 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 10
         }
@@ -892,6 +956,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Current RAM requests vs RAM available",
       "fieldConfig": {
         "defaults": {
@@ -936,7 +1004,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 14
+        "y": 15
       },
       "id": 92,
       "links": [],
@@ -953,19 +1021,21 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "(\n sum(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", namespace!=\"\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n /\n sum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n) * 100",
+          "expr": "(\n sum(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", namespace!=\"\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n /\n sum(kube_node_status_capacity{resource=\"memory\", unit=\"byte\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 10
         }
@@ -974,60 +1044,85 @@
       "type": "gauge"
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 18
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
       },
-      "id": 108,
-      "panels": [],
-      "title": "CPU Metrics",
-      "type": "row"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
         "y": 19
       },
-      "hiddenSeries": false,
       "id": 116,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.3.3",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
@@ -1060,220 +1155,112 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "SUM(irate(container_cpu_usage_seconds_total{id=\"/\"}[5m])  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))",
+          "expr": "sum(label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[5m]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "usage",
+          "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": false,
-          "expr": "SUM(kube_pod_container_resource_limits{resource=\"cpu\", unit=\"core\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) ",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "limits",
-          "refId": "D"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Cluster CPUs",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 1,
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "description": "Current CPU use from applications divided by allocatable CPUs",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "unit": "percent"
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decgbytes"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 27
-      },
-      "hiddenSeries": false,
-      "hideTimeOverride": true,
-      "id": 82,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.3.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": false,
-          "expr": "sum(\nlabel_replace(irate(container_cpu_usage_seconds_total{container!=\"POD\", container!=\"\",image!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(.*)\") \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n)\n/\nsum(\nkube_node_status_allocatable{resource=\"cpu\", unit=\"core\"} \n* on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) \n\n* 100",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "cpu",
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": "",
-      "timeRegions": [],
-      "title": "Cluster CPU Utilization",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 32
-      },
-      "id": 113,
-      "panels": [],
-      "title": "Memory Metrics",
-      "type": "row"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 27
       },
-      "hiddenSeries": false,
       "id": 117,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.3.3",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
           "expr": "SUM(kube_node_status_capacity{resource=\"memory\", unit=\"byte\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)  / 1024 / 1024 / 1024 )",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "capacity",
+          "range": true,
           "refId": "A"
         },
         {
@@ -1294,162 +1281,247 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "SUM(container_memory_usage_bytes{image!=\"\"}   * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) / 1024 / 1024 / 1024)",
+          "expr": "SUM(label_replace(container_memory_working_set_bytes{id=\"/\"}, \"node\", \"$1\", \"instance\",  \"(^[^:]+)\")  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)) / 1024 / 1024 / 1024",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "usage",
+          "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": false,
-          "expr": "SUM(kube_pod_container_resource_limits{resource=\"memory\", unit=\"byte\", namespace!=\"\"} * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) / 1024 / 1024 / 1024)",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "limits",
-          "refId": "D"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Cluster memory (GB)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:3385",
-          "format": "decgbytes",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:3386",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "title": "Cluster Memory (GB)",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent"
-        },
-        "overrides": []
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 35
       },
-      "hiddenSeries": false,
-      "id": 131,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.3.3",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "id": 108,
+      "panels": [],
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "exemplar": false,
-          "expr": "(\n sum(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", namespace!=\"\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n /\n sum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"}  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!=\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) )\n) * 100",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "usage",
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Cluster Memory Utilization",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
+      "title": "Node Utilization Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
       },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:3355",
-          "format": "percent",
-          "logBase": 1,
-          "show": true
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 137,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
         {
-          "$$hashKey": "object:3356",
-          "format": "short",
-          "logBase": 1,
-          "show": true
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (node) (label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[5m]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\"))/sum by (node) (kube_node_status_capacity{resource=\"cpu\", unit=\"core\",node!~\"eklet\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "cpu utilization",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "yaxis": {
-        "align": false
-      }
+      "title": "Node CPU Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "id": 140,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (node) (label_replace(container_memory_working_set_bytes{container!=\"\"}, \"node\", \"$1\", \"instance\",  \"(^[^:]+)\"))/sum by (node) (kube_node_status_capacity{resource=\"memory\", unit=\"byte\",node!~\"eklet\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "cpu utilization",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Node Memory Utilization",
+      "type": "timeseries"
     }
   ],
   "refresh": false,
-  "schemaVersion": 34,
+  "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "cost",
-    "utilization",
-    "metrics"
-  ],
+  "tags": [],
   "templating": {
     "list": [
       {
@@ -1504,8 +1576,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Cluster cost & utilization metrics",
-  "uid": "cluster-costs",
-  "version": 2,
+  "title": "Cluster Cost & Utilization Overview Copy",
+  "uid": "cluster-overview",
+  "version": 14,
   "weekStart": ""
 }
