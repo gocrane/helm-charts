@@ -23,13 +23,16 @@
   },
   "description": "Workload Insight",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1678952105808,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Workload optimize model dashboard, calculate all pods metric",
       "fieldConfig": {
         "defaults": {
@@ -37,6 +40,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -44,7 +49,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -56,7 +60,14 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -92,9 +103,6 @@
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "targets": [
@@ -138,7 +146,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Workload optimize model dashboard, calculate all pods metric",
       "fieldConfig": {
         "defaults": {
@@ -146,6 +157,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -153,7 +166,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -165,7 +177,14 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -201,9 +220,6 @@
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "targets": [
@@ -247,7 +263,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Workload insight for CPU, Spec level",
       "fieldConfig": {
         "defaults": {
@@ -255,6 +274,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -262,7 +283,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -274,7 +294,14 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -310,9 +337,6 @@
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "targets": [
@@ -356,7 +380,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Workload Insight, Spec level.",
       "fieldConfig": {
         "defaults": {
@@ -364,6 +391,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -371,7 +400,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -383,7 +411,14 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -419,9 +454,6 @@
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "targets": [
@@ -467,22 +499,22 @@
   ],
   "refresh": "",
   "revision": 1,
-  "schemaVersion": 27,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
-          "selected": true,
-          "text": "kube-system",
-          "value": "kube-system"
+          "selected": false,
+          "text": "crane-system",
+          "value": "crane-system"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
         "definition": "label_values(namespace)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
@@ -497,23 +529,23 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "allValue": null,
         "current": {
-          "selected": false,
-          "text": "Deployment",
-          "value": "Deployment"
+          "selected": true,
+          "text": [
+            "Deployment"
+          ],
+          "value": [
+            "Deployment"
+          ]
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
         "definition": "label_values(crane_analysis_resource_recommendation{namespace=~\"$Namespace\"},owner_kind)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "WorkloadType",
@@ -528,23 +560,19 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "allValue": null,
         "current": {
-          "selected": false,
-          "text": "coredns",
-          "value": "coredns"
+          "selected": true,
+          "text": "grafana",
+          "value": "grafana"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
         "definition": "label_values(crane_analysis_resource_recommendation{namespace=~\"$Namespace\",owner_kind=\"$WorkloadType\"},owner_name)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Workload",
@@ -559,11 +587,7 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       }
     ]
   },
@@ -575,5 +599,6 @@
   "timezone": "",
   "title": "Workload Insight",
   "uid": "workload-insight",
-  "version": 1
+  "version": 1,
+  "weekStart": ""
 }
