@@ -25,7 +25,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1678953135490,
+  "iteration": 1679036195996,
   "links": [],
   "panels": [
     {
@@ -380,7 +380,7 @@
           "exemplar": true,
           "expr": "avg by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"core\",resource=\"cpu\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n- \nsum by (workload) (label_replace(crane_analysis_resource_recommendation{namespace=~\"$Namespace\",owner_kind=\"Deployment\",resource=\"cpu\",owner_name=~\"$Workload\"}, \"workload\", \"$1\", \"owner_name\", \"(.*)\"))",
           "interval": "",
-          "legendFormat": "__auto",
+          "legendFormat": "",
           "range": true,
           "refId": "A"
         }
@@ -470,7 +470,7 @@
           "exemplar": true,
           "expr": "(avg by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"byte\",resource=\"memory\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n- \nsum by (workload) (label_replace(crane_analysis_resource_recommendation{namespace=~\"$Namespace\",owner_kind=\"Deployment\",resource=\"memory\",owner_name=~\"$Workload\"}, \"workload\", \"$1\", \"owner_name\", \"(.*)\")))/1024/1024/1024",
           "interval": "",
-          "legendFormat": "__auto",
+          "legendFormat": "",
           "range": true,
           "refId": "A"
         }
@@ -555,8 +555,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": true,
           "expr": "sum by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"core\",resource=\"cpu\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n- \n(sum by (workload) (label_replace(crane_analysis_resource_recommendation{namespace=~\"$Namespace\",owner_kind=\"Deployment\",resource=\"cpu\",owner_name=~\"$Workload\"}, \"workload\", \"$1\", \"owner_name\", \"(.*)\"))\n*\ncount by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"core\",resource=\"cpu\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n)",
-          "legendFormat": "__auto",
+          "interval": "",
+          "legendFormat": "",
           "range": true,
           "refId": "A"
         }
@@ -642,8 +644,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": true,
           "expr": "(sum by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"byte\",resource=\"memory\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n- \n(sum by (workload) (label_replace(crane_analysis_resource_recommendation{namespace=~\"$Namespace\",owner_kind=\"Deployment\",resource=\"memory\",owner_name=~\"$Workload\"}, \"workload\", \"$1\", \"owner_name\", \"(.*)\"))\n*\ncount by (workload) (label_replace(kube_pod_container_resource_requests{namespace=~\"$Namespace\",unit=\"byte\",resource=\"memory\",pod=~\"^$Workload-.*$\"}, \"workload\", \"$1\", \"pod\", \"(^$Workload)-.*$\"))\n)\n)/1024/1024/1024",
-          "legendFormat": "__auto",
+          "interval": "",
+          "legendFormat": "",
           "range": true,
           "refId": "A"
         }
@@ -696,7 +700,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "kube-system"
           ],
