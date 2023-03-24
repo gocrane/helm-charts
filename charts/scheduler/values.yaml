@@ -34,3 +34,4 @@ controller:
 global:
   prometheusAddr: http://prometheus-server.crane-system.svc.cluster.local:8080
 
+
