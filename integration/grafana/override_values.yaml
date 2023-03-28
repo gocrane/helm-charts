@@ -3910,7 +3910,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4009,7 +4009,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4106,7 +4106,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4203,7 +4203,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4304,7 +4304,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4406,7 +4406,7 @@ dashboards:
                "value_type": "individual"
              },
              "transformations": [],
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
@@ -4501,7 +4501,7 @@ dashboards:
                "sort": 0,
                "value_type": "individual"
              },
-             "type": "graph",
+             "type": "timeseries",
              "xaxis": {
                "buckets": null,
                "mode": "time",
