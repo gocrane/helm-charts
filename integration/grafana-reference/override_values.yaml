@@ -592,7 +592,7 @@ dashboards:
                   },
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "sum(\n  label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"^[^:]+\") \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)\n/\nsum(\n  kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) by (node) \n\n* 100",
+                  "expr": "sum(\n  label_replace(irate(container_cpu_usage_seconds_total{container!=\"\"}[1h]), \"node\", \"$1\", \"instance\",  \"(^[^:]+)\") \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node)\n) by (node)\n/\nsum(\n  kube_node_status_capacity{resource=\"cpu\", unit=\"core\"} \n  * on (node) group_left() max(kube_node_labels{label_beta_kubernetes_io_instance_type!~\"eklet\", label_node_kubernetes_io_instance_type!~\"eklet\"}) by (node) \n) by (node) \n\n* 100",
                   "format": "table",
                   "hide": false,
                   "instant": true,
