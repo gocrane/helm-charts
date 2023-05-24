@@ -13,7 +13,7 @@ data:
     {{- end }}
     kind: KubeSchedulerConfiguration
     leaderElection:
-      leaderElect: false
+      leaderElect: true
     profiles:
     - schedulerName: crane-scheduler
       plugins:

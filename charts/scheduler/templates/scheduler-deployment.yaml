@@ -23,7 +23,7 @@ spec:
         - --leader-elect=false
         - --config=/etc/kubernetes/kube-scheduler/scheduler-config.yaml
         {{- if ge .Capabilities.KubeVersion.Minor "22" }}
-        image: "{{ .Values.scheduler.image.repository }}:0.0.23"
+        image: "{{ .Values.scheduler.image.repository }}:{{ .Values.scheduler.image.tag | default .Chart.AppVersion }}"
         {{- else }}
         image: "{{ .Values.scheduler.image.repository }}:0.0.20"
         {{- end }}
