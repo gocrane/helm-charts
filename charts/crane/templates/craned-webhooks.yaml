@@ -33,48 +33,6 @@ webhooks:
       service:
         name: craned
         namespace: {{ .Release.Namespace }}
-        path: /mutate-ensurance-crane-io-v1alpha1-nodeqosensurancepolicy
-    failurePolicy: Fail
-    name: mnodeqosensurancepolicies.ensurance.crane.io
-    rules:
-      - apiGroups:
-          - ensurance.crane.io
-        apiVersions:
-          - v1alpha1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - NodeQOSEnsurancePolicy
-    sideEffects: None
-  - admissionReviewVersions:
-      - v1
-    clientConfig:
-      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
-      service:
-        name: craned
-        namespace: {{ .Release.Namespace }}
-        path: /mutate-ensurance-crane-io-v1alpha1-avoidanceaction
-    failurePolicy: Fail
-    name: mavoidanceactions.ensurance.crane.io
-    rules:
-      - apiGroups:
-          - ensurance.crane.io
-        apiVersions:
-          - v1alpha1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - AvoidanceAction
-    sideEffects: None
-  - admissionReviewVersions:
-      - v1
-    clientConfig:
-      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
-      service:
-        name: craned
-        namespace: {{ .Release.Namespace }}
         path: /mutate-autoscaling-crane-io-v1alpha1-effectivehorizontalpodautoscaler
     failurePolicy: Fail
     name: mautoscaling.crane.io
@@ -118,48 +76,6 @@ webhooks:
           - UPDATE
         resources:
           - timeseriespredictions
-    sideEffects: None
-  - admissionReviewVersions:
-      - v1
-    clientConfig:
-      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
-      service:
-        name: craned
-        namespace: crane-system
-        path: /validate-ensurance-crane-io-v1alpha1-nodeqosensurancepolicy
-    failurePolicy: Fail
-    name: vnodeqosensurancepolicies.ensurance.crane.io
-    rules:
-      - apiGroups:
-          - ensurance.crane.io
-        apiVersions:
-          - v1alpha1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - nodeqosensurancepolicies
-    sideEffects: None
-  - admissionReviewVersions:
-      - v1
-    clientConfig:
-      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
-      service:
-        name: craned
-        namespace: {{ .Release.Namespace }}
-        path: /validate-ensurance-crane-io-v1alpha1-avoidanceaction
-    failurePolicy: Fail
-    name: vavoidanceactions.ensurance.crane.io
-    rules:
-      - apiGroups:
-          - ensurance.crane.io
-        apiVersions:
-          - v1alpha1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - avoidanceactions
     sideEffects: None
   - admissionReviewVersions:
       - v1
