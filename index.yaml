@@ -13,6 +13,28 @@ entries:
     version: 0.1.0
   crane:
   - apiVersion: v2
+    appVersion: v0.11.0
+    created: "2023-07-25T12:08:42.964254983Z"
+    description: A Helm chart for Crane
+    digest: 1f3f163abc17c373e27380be42cf39d5041090ccad3c7af1597390550a8f7fe9
+    home: https://github.com/gocrane/crane
+    icon: https://github.com/gocrane/crane/blob/main/docs/images/crane.png
+    keywords:
+    - kubernetes
+    - finops
+    - autoscaling
+    - hpa
+    - vpa
+    - resources
+    - qos
+    name: crane
+    sources:
+    - https://github.com/gocrane/crane
+    type: application
+    urls:
+    - https://github.com/gocrane/helm-charts/releases/download/crane-0.11.0/crane-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v2
     appVersion: v0.10.0
     created: "2023-03-24T07:36:52.560763507Z"
     description: A Helm chart for Crane
@@ -339,4 +361,4 @@ entries:
     urls:
     - https://github.com/gocrane/helm-charts/releases/download/scheduler-0.1.0/scheduler-0.1.0.tgz
     version: 0.1.0
-generated: "2023-03-24T07:36:52.560815808Z"
+generated: "2023-07-25T12:08:43.077672866Z"
