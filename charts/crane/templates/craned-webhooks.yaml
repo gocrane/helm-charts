@@ -47,6 +47,71 @@ webhooks:
         resources:
           - EffectiveHorizontalPodAutoscaler
     sideEffects: None
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
+      service:
+        name: craned
+        namespace: {{ .Release.Namespace }}
+        path: /mutate-ensurance-crane-io-v1alpha1-nodeqosensurancepolicy
+    failurePolicy: Fail
+    name: mnodeqosensurancepolicies.ensurance.crane.io
+    rules:
+      - apiGroups:
+          - ensurance.crane.io
+        apiVersions:
+          - v1alpha1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - NodeQOSEnsurancePolicy
+    sideEffects: None
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
+      service:
+        name: craned
+        namespace: {{ .Release.Namespace }}
+        path: /mutate-ensurance-crane-io-v1alpha1-avoidanceaction
+    failurePolicy: Fail
+    name: mavoidanceactions.ensurance.crane.io
+    rules:
+      - apiGroups:
+          - ensurance.crane.io
+        apiVersions:
+          - v1alpha1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - AvoidanceAction
+    sideEffects: None
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      caBundle: {{ .Files.Get "keys/ca.crt" | b64enc }}
+      service:
+        name: craned
+        namespace: {{ .Release.Namespace }}
+        path: /mutate--v1-pod
+    failurePolicy: Ignore
+    name: m.v1.pod
+    rules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+    sideEffects: None
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system
+            - crane-system
 
 ---
 apiVersion: admissionregistration.k8s.io/v1
